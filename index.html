@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Book Reader - Mobile Optimized</title>
+  <title>Book Reader</title>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,6 +29,8 @@
       --badge-story-text: #ff9500;
       --badge-topic-bg: rgba(90, 200, 250, 0.15);
       --badge-topic-text: #5ac8fa;
+      --badge-header-bg: rgba(142, 142, 147, 0.15);
+      --badge-header-text: #8e8e93;
       --read-color: #34c759;
       --reader-bg: #050505;
       --shadow-sm: 0 2px 8px rgba(0,0,0,0.5);
@@ -44,11 +46,13 @@
       --accent-color: #8c6239;
       --accent-hover: #a67c52;
       --card-bg: #faf4eb;
-      --nav-bg: rgba(252, 248, 242, 0.9);
+      --nav-bg: rgba(252, 248, 242, 0.95);
       --badge-story-bg: rgba(140, 98, 57, 0.15);
       --badge-story-text: #8c6239;
       --badge-topic-bg: rgba(60, 110, 113, 0.15);
       --badge-topic-text: #3c6e71;
+      --badge-header-bg: rgba(125, 110, 101, 0.15);
+      --badge-header-text: #7d6e65;
       --read-color: #2a7b4c;
       --reader-bg: #fdfaf5;
       --shadow-sm: 0 2px 8px rgba(140, 98, 57, 0.08);
@@ -64,15 +68,83 @@
       --accent-color: #3b82f6;
       --accent-hover: #60a5fa;
       --card-bg: #1e293b;
-      --nav-bg: rgba(18, 24, 36, 0.9);
+      --nav-bg: rgba(18, 24, 36, 0.95);
       --badge-story-bg: rgba(245, 158, 11, 0.15);
       --badge-story-text: #f59e0b;
       --badge-topic-bg: rgba(14, 165, 233, 0.15);
       --badge-topic-text: #0ea5e9;
+      --badge-header-bg: rgba(148, 163, 184, 0.15);
+      --badge-header-text: #94a3b8;
       --read-color: #10b981;
       --reader-bg: #0f141e;
       --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
       --shadow-md: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    :root[data-theme="forest"] {
+      --bg-color: #050a06;
+      --surface-color: #0c140e;
+      --border-color: #1a2b1f;
+      --text-main: #e2ecd5;
+      --text-muted: #8ba085;
+      --accent-color: #2e7d32;
+      --accent-hover: #388e3c;
+      --card-bg: #090f0b;
+      --nav-bg: rgba(5, 10, 6, 0.95);
+      --badge-story-bg: rgba(255, 149, 0, 0.15);
+      --badge-story-text: #ff9500;
+      --badge-topic-bg: rgba(52, 199, 89, 0.15);
+      --badge-topic-text: #34c759;
+      --badge-header-bg: rgba(139, 160, 133, 0.15);
+      --badge-header-text: #8ba085;
+      --read-color: #30d158;
+      --reader-bg: #030604;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    :root[data-theme="nordic"] {
+      --bg-color: #f0f4f8;
+      --surface-color: #e1e8f0;
+      --border-color: #cbd5e1;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --accent-color: #2563eb;
+      --accent-hover: #1d4ed8;
+      --card-bg: #ffffff;
+      --nav-bg: rgba(240, 244, 248, 0.95);
+      --badge-story-bg: rgba(245, 158, 11, 0.15);
+      --badge-story-text: #d97706;
+      --badge-topic-bg: rgba(37, 99, 235, 0.15);
+      --badge-topic-text: #2563eb;
+      --badge-header-bg: rgba(100, 116, 139, 0.15);
+      --badge-header-text: #64748b;
+      --read-color: #059669;
+      --reader-bg: #f8fafc;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    :root[data-theme="contrast"] {
+      --bg-color: #ffffff;
+      --surface-color: #ffffff;
+      --border-color: #000000;
+      --text-main: #000000;
+      --text-muted: #4b5563;
+      --accent-color: #000000;
+      --accent-hover: #111827;
+      --card-bg: #ffffff;
+      --nav-bg: rgba(255, 255, 255, 0.98);
+      --badge-story-bg: #000000;
+      --badge-story-text: #ffffff;
+      --badge-topic-bg: #000000;
+      --badge-topic-text: #ffffff;
+      --badge-header-bg: #e5e7eb;
+      --badge-header-text: #000000;
+      --read-color: #000000;
+      --reader-bg: #ffffff;
+      --shadow-sm: none;
+      --shadow-md: none;
     }
 
     /* Core Styles */
@@ -91,38 +163,39 @@
       line-height: 1.5;
       font-size: 16px;
       overflow-x: hidden;
-      /* Smooth scrolling */
       scroll-behavior: smooth;
     }
 
-    /* Standard Mobile Layout Constraints (Optimized for 20:9 viewport like OnePlus 8T) */
     .app-container {
       width: 100%;
-      max-width: 600px; /* Perfect reading column width */
+      max-width: 600px;
       margin: 0 auto;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding-bottom: 80px; /* Safe space for floating bar */
+      padding-bottom: 80px;
       position: relative;
     }
 
-    /* Typography & Titles */
     h1, h2, h3, h4 {
       font-family: 'Outfit', sans-serif;
       font-weight: 700;
       letter-spacing: -0.02em;
     }
 
-    /* Header Component */
+    /* Fixed Header (Anchored properly) */
     header {
       background-color: var(--nav-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-color);
       padding: 16px 20px;
-      position: sticky;
+      position: fixed;
       top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 600px;
       z-index: 100;
       display: flex;
       align-items: center;
@@ -175,7 +248,7 @@
       background-color: var(--border-color);
     }
 
-    /* Reading Progress Bar on Header */
+    /* Top Reading Progress Bar */
     .progress-track {
       position: absolute;
       bottom: -1px;
@@ -192,14 +265,41 @@
       transition: width 0.3s ease;
     }
 
-    /* Dashboard & Intro Card */
+    /* Main Content Area */
     .main-content {
+      margin-top: 76px;
       padding: 16px;
       display: flex;
       flex-direction: column;
       gap: 20px;
     }
 
+    /* Scroll progress pill */
+    .scroll-progress-pill {
+      position: fixed;
+      top: 88px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background-color: var(--accent-color);
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      box-shadow: var(--shadow-sm);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 95;
+    }
+
+    .scroll-progress-pill.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Thesis Board */
     .dashboard-card {
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -256,7 +356,7 @@
       color: var(--accent-color);
     }
 
-    /* File Uploader View (Fallback & setup) */
+    /* Fallback file uploader */
     .uploader-container {
       display: flex;
       flex-direction: column;
@@ -313,7 +413,7 @@
       display: none;
     }
 
-    /* Chapter List Card */
+    /* Chapter Card Header */
     .chapter-card {
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -337,6 +437,9 @@
       display: flex;
       flex-direction: column;
       gap: 2px;
+      flex: 1;
+      min-width: 0;
+      padding-right: 12px;
     }
 
     .chapter-number {
@@ -344,13 +447,16 @@
       font-family: 'Outfit', sans-serif;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.05em;
       color: var(--accent-color);
     }
 
     .chapter-title {
       font-size: 1.1rem;
       color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .chapter-body {
@@ -372,12 +478,13 @@
     .chevron-icon {
       transition: transform 0.3s ease;
       color: var(--text-muted);
+      flex-shrink: 0;
     }
 
     /* Chapter Core Idea Area */
     .chapter-core-idea {
-      background: linear-gradient(135deg, rgba(88, 86, 214, 0.1), rgba(0,0,0,0));
-      border: 1px solid rgba(88, 86, 214, 0.2);
+      background: linear-gradient(135deg, rgba(88, 86, 214, 0.08), rgba(0,0,0,0));
+      border: 1px solid rgba(88, 86, 214, 0.15);
       border-radius: 14px;
       padding: 16px;
       position: relative;
@@ -403,7 +510,7 @@
       line-height: 1.6;
     }
 
-    /* Section Cards (Topics & Stories) */
+    /* Recursive Section Rendering */
     .sections-container {
       display: flex;
       flex-direction: column;
@@ -412,15 +519,17 @@
     }
 
     .section-card {
+      position: relative;
       border: 1px solid var(--border-color);
       background-color: rgba(255, 255, 255, 0.01);
       border-radius: 14px;
-      overflow: hidden;
+      overflow: visible; /* CRITICAL: Must be visible to let the top-right border badge overlap */
       transition: border-color 0.2s;
+      margin-top: 6px; /* give slight breathing room for border badge */
     }
 
     .section-card-header {
-      padding: 14px 16px;
+      padding: 16px 14px 12px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -441,6 +550,7 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      flex-shrink: 0;
     }
 
     .checkbox-icon {
@@ -452,37 +562,66 @@
       color: var(--read-color);
     }
 
-    .section-card-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .badge {
+    .parent-progress-badge {
+      background-color: var(--border-color);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
       font-size: 0.65rem;
       font-family: 'Outfit', sans-serif;
       font-weight: 700;
       padding: 2px 6px;
       border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 38px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    /* Wrapped, multi-line titles without ellipsis truncation */
+    .section-card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      white-space: normal;
+      word-break: break-word;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    /* Top-Right Badge Overlay (Does not interfere with title wrapping) */
+    .section-badge-overlay {
+      position: absolute;
+      top: -9px;
+      right: 16px;
+      font-size: 0.62rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      padding: 2px 8px;
+      border-radius: 6px;
+      line-height: 1.2;
+      z-index: 10;
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg);
     }
 
     .badge-story {
-      background-color: var(--badge-story-bg);
       color: var(--badge-story-text);
     }
 
     .badge-topic {
-      background-color: var(--badge-topic-bg);
       color: var(--badge-topic-text);
+    }
+
+    .badge-header {
+      color: var(--badge-header-text);
     }
 
     .section-card-body {
       display: none;
-      padding: 0 16px 16px 16px;
+      padding: 0 14px 14px 14px;
     }
 
     .section-card.expanded {
@@ -490,25 +629,26 @@
       background-color: rgba(255, 255, 255, 0.02);
     }
 
-    .section-card.expanded .section-card-body {
+    .section-card.expanded > .section-card-body {
       display: block;
       animation: slideDown 0.25s ease-out forwards;
     }
 
-    .section-card.expanded .section-chevron {
+    .section-card.expanded > .section-card-header .section-chevron {
       transform: rotate(180deg);
     }
 
     .section-chevron {
       transition: transform 0.25s;
       color: var(--text-muted);
+      flex-shrink: 0;
     }
 
     .section-summary-text {
       font-size: 0.9rem;
       color: var(--text-muted);
       line-height: 1.5;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .btn-read-full {
@@ -534,19 +674,30 @@
       border-color: var(--accent-color);
     }
 
-    /* Unabridged Reader Mode View (Immersive Overlay) */
+    /* Recursive Indentation Tree */
+    .nested-sections {
+      margin-left: 10px;
+      padding-left: 10px;
+      border-left: 1px dashed var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    /* Immersive Reader View (FullScreen Overlay) */
     .reader-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
+      height: 100dvh;
       background-color: var(--reader-bg);
       z-index: 200;
       display: none;
       flex-direction: column;
-      overflow-y: auto;
-      overscroll-behavior: contain;
+      overflow: hidden; /* Lock outer container, prevent scrolling */
     }
 
     .reader-overlay.active {
@@ -560,12 +711,12 @@
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-color);
       padding: 16px 20px;
-      position: sticky;
-      top: 0;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
       z-index: 10;
+      flex-shrink: 0; /* Keep size stable */
     }
 
     .reader-header-left {
@@ -596,14 +747,39 @@
       color: var(--text-main);
     }
 
+    /* Fixed Scrollable Area inside Reader Overlay */
+    .reader-scroll-body {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: calc(110px + env(safe-area-inset-bottom, 0px)); /* Space for fixed footer buttons */
+    }
+
     .reader-content-container {
       width: 100%;
       max-width: 600px;
       margin: 0 auto;
-      padding: 24px 20px 100px 20px;
-      flex: 1;
+      padding: 24px 20px;
+    }
+
+    /* Hierarchy Breadcrumb */
+    .reader-breadcrumb {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .reader-breadcrumb span {
+      color: var(--accent-color);
+      font-weight: 700;
     }
 
     .reader-summary-preview {
@@ -631,17 +807,33 @@
       font-style: italic;
     }
 
+    /* Typography Contrast Themes */
     .reader-body-text {
-      font-family: 'Lora', Georgia, serif;
-      font-size: var(--reading-font-size, 18px);
-      line-height: 1.8;
+      line-height: 1.85;
       color: var(--text-main);
       transition: font-size 0.2s;
+    }
+
+    .reader-body-text.font-serif {
+      font-family: 'Lora', Georgia, serif;
+      --reading-font-size: 18px;
+    }
+
+    .reader-body-text.font-sans {
+      font-family: 'Inter', -apple-system, sans-serif;
+      --reading-font-size: 17px;
+    }
+
+    .reader-body-text.font-mono {
+      font-family: 'Courier New', Courier, monospace;
+      --reading-font-size: 16px;
+      letter-spacing: -0.01em;
     }
 
     .reader-body-text p {
       margin-bottom: 24px;
       text-indent: 1.5em;
+      font-size: var(--reading-font-size);
     }
 
     .reader-body-text p:first-of-type {
@@ -659,10 +851,10 @@
       color: var(--accent-color);
     }
 
-    /* Floating Reader Action Bar (One-handed navigation bottom) */
+    /* Floating Reader bar (Anchored to overlay viewport, NOT contents) */
     .reader-footer-actions {
-      position: fixed;
-      bottom: 20px;
+      position: absolute; /* Fixed relative to .reader-overlay box boundary */
+      bottom: calc(24px + env(safe-area-inset-bottom, 0px));
       left: 50%;
       transform: translateX(-50%);
       width: calc(100% - 40px);
@@ -687,6 +879,18 @@
       box-shadow: 0 10px 30px rgba(140, 98, 57, 0.15);
     }
 
+    :root[data-theme="nordic"] .reader-footer-actions {
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    :root[data-theme="contrast"] .reader-footer-actions {
+      background-color: #ffffff;
+      border: 2px solid #000000;
+      box-shadow: none;
+    }
+
     .footer-action-btn {
       background: none;
       border: none;
@@ -703,6 +907,11 @@
 
     .footer-action-btn:active {
       opacity: 1;
+    }
+
+    .footer-action-btn:disabled {
+      cursor: not-allowed;
+      pointer-events: none;
     }
 
     .footer-action-btn span {
@@ -746,6 +955,7 @@
       flex-direction: column;
       gap: 24px;
       flex: 1;
+      overflow-y: auto;
     }
 
     .settings-overlay {
@@ -778,7 +988,6 @@
       color: var(--text-muted);
     }
 
-    /* Theme Option buttons */
     .theme-selector {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -807,7 +1016,36 @@
       background-color: rgba(88, 86, 214, 0.08);
     }
 
-    /* Font controls */
+    /* Font selector grid */
+    .font-selector-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .font-style-opt {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 10px 4px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-align: center;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .font-style-opt.active {
+      border-color: var(--accent-color);
+      background-color: rgba(88, 86, 214, 0.08);
+    }
+
+    .font-style-opt.font-serif-btn { font-family: 'Lora', serif; }
+    .font-style-opt.font-sans-btn { font-family: 'Inter', sans-serif; }
+    .font-style-opt.font-mono-btn { font-family: monospace; }
+
     .font-size-controls {
       display: flex;
       align-items: center;
@@ -850,7 +1088,6 @@
       background-color: var(--accent-hover);
     }
 
-    /* Reset button */
     .reset-btn {
       width: 100%;
       background-color: transparent;
@@ -865,7 +1102,7 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      margin-top: auto;
+      margin-top: 40px;
       transition: background-color 0.2s;
     }
 
@@ -873,7 +1110,6 @@
       background-color: rgba(255, 69, 58, 0.1);
     }
 
-    /* Custom Scrollbar for AMOLED/Dark settings */
     ::-webkit-scrollbar {
       width: 6px;
     }
@@ -885,7 +1121,6 @@
       border-radius: 3px;
     }
 
-    /* Animations */
     @keyframes slideDown {
       from {
         opacity: 0;
@@ -906,20 +1141,6 @@
       }
     }
 
-    /* Desktop fallback warning banner */
-    .desktop-tip {
-      background-color: rgba(88, 86, 214, 0.1);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 10px 14px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
     .hidden {
       display: none !important;
     }
@@ -929,11 +1150,14 @@
 
   <div class="app-container">
     
-    <!-- Header -->
+    <!-- Floating scroll progress indicator -->
+    <div id="scroll-progress-pill" class="scroll-progress-pill">Book Completed: 0%</div>
+
+    <!-- Fixed Header -->
     <header>
       <div class="header-info">
-        <h1 class="book-title" id="app-title">Loading Book...</h1>
-        <p class="book-author" id="app-author">Please upload a book structure</p>
+        <h1 class="book-title" id="app-title">Book Reader</h1>
+        <p class="book-author" id="app-author">by Ahrar Muhammad</p>
       </div>
       <div class="header-actions">
         <button class="icon-btn" id="open-settings" aria-label="Settings">
@@ -945,16 +1169,10 @@
       </div>
     </header>
 
-    <!-- Main View Dashboard -->
+    <!-- Main Content Area -->
     <main class="main-content" id="main-content-area">
       
-      <!-- Desktop & Layout Notification -->
-      <div class="desktop-tip" id="desktop-tip">
-        <i data-lucide="smartphone" style="width: 16px; height: 16px; flex-shrink: 0; color: var(--accent-color);"></i>
-        <span>Optimized for OnePlus 8T layout. Use Chrome DevTools Device view for best experience.</span>
-      </div>
-
-      <!-- File Drop & Load Dashboard -->
+      <!-- JSON Data File Uploader -->
       <div class="uploader-container" id="uploader-view">
         <i data-lucide="file-json" class="uploader-icon" style="width: 48px; height: 48px;"></i>
         <h2 class="uploader-title">Load Book JSON Data</h2>
@@ -968,7 +1186,22 @@
         </div>
       </div>
 
-      <!-- Book Overview / Dashboard Panel -->
+      <!-- PDF-to-JSON Prompt Tool -->
+      <div class="dashboard-card" id="prompt-copier-card" style="margin-top: 8px;">
+        <h2 class="section-title" style="font-size: 1.1rem; margin-bottom: 6px;">
+          <i data-lucide="terminal" style="width: 16px; height: 16px; color: var(--accent-color);"></i>
+          Agent Parser Prompt
+        </h2>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.45;">
+          Use this optimized prompt with an AI assistant or subagent along with your book PDF to generate the required hierarchical JSON dataset.
+        </p>
+        <button class="btn-read-full" id="btn-copy-prompt" style="padding: 10px; font-size: 0.8rem;">
+          <i data-lucide="copy" style="width: 14px; height: 14px;"></i>
+          <span>Copy Parser Prompt</span>
+        </button>
+      </div>
+
+      <!-- Thesis Board -->
       <div class="dashboard-card hidden" id="book-dashboard">
         <h2 class="section-title">
           <i data-lucide="sparkles" style="width: 18px; height: 18px; color: var(--accent-color);"></i>
@@ -979,14 +1212,14 @@
         <ul class="takeaways-list" id="book-takeaways"></ul>
       </div>
 
-      <!-- Chapter Accoridon Listing -->
+      <!-- Dynamic chapter accordion tree container -->
       <div id="chapters-list-container" class="hidden" style="display: flex; flex-direction: column; gap: 16px;">
-        <!-- Dynamically Rendered Chapters Go Here -->
+        <!-- Chapters and nested subheadings rendered here -->
       </div>
 
     </main>
 
-    <!-- Settings Side Drawer -->
+    <!-- Drawer Options Overlay -->
     <div class="settings-overlay" id="settings-overlay"></div>
     <div class="settings-drawer" id="settings-drawer">
       <div class="settings-header">
@@ -997,26 +1230,48 @@
       </div>
       <div class="settings-body">
         
-        <!-- Theme Setting -->
+        <!-- Theme Grid -->
         <div class="settings-group">
           <span class="settings-group-title">Display Theme</span>
           <div class="theme-selector">
             <button class="theme-opt" data-val="amoled">
-              <span style="width: 20px; height: 20px; border-radius: 50%; background-color: #000; border: 1px solid #444;"></span>
+              <span style="width: 16px; height: 16px; border-radius: 50%; background-color: #000; border: 1px solid #444;"></span>
               AMOLED
             </button>
             <button class="theme-opt" data-val="dim">
-              <span style="width: 20px; height: 20px; border-radius: 50%; background-color: #121824; border: 1px solid #444;"></span>
+              <span style="width: 16px; height: 16px; border-radius: 50%; background-color: #121824; border: 1px solid #444;"></span>
               Dim
             </button>
             <button class="theme-opt" data-val="sepia">
-              <span style="width: 20px; height: 20px; border-radius: 50%; background-color: #fcf8f2; border: 1px solid #ccc;"></span>
+              <span style="width: 16px; height: 16px; border-radius: 50%; background-color: #fcf8f2; border: 1px solid #ccc;"></span>
               Sepia
+            </button>
+            <button class="theme-opt" data-val="forest">
+              <span style="width: 16px; height: 16px; border-radius: 50%; background-color: #050a06; border: 1px solid #285430;"></span>
+              Forest
+            </button>
+            <button class="theme-opt" data-val="nordic">
+              <span style="width: 16px; height: 16px; border-radius: 50%; background-color: #f0f4f8; border: 1px solid #2563eb;"></span>
+              Nordic
+            </button>
+            <button class="theme-opt" data-val="contrast">
+              <span style="width: 16px; height: 16px; border-radius: 50%; background-color: #ffffff; border: 1px solid #000000;"></span>
+              Contrast
             </button>
           </div>
         </div>
 
-        <!-- Font Size Setting -->
+        <!-- Typography Contrast Styles -->
+        <div class="settings-group">
+          <span class="settings-group-title">Reader Typography</span>
+          <div class="font-selector-grid">
+            <button class="font-style-opt font-serif-btn" data-val="serif">Serif</button>
+            <button class="font-style-opt font-sans-btn" data-val="sans">Sans</button>
+            <button class="font-style-opt font-mono-btn" data-val="mono">Mono</button>
+          </div>
+        </div>
+
+        <!-- Font sizing -->
         <div class="settings-group">
           <span class="settings-group-title">Reader Text Size</span>
           <div class="font-size-controls">
@@ -1030,7 +1285,18 @@
           </div>
         </div>
 
-        <!-- Reset Button -->
+        <!-- Backup & Export -->
+        <div class="settings-group" id="export-group" style="margin-top: 10px;">
+          <span class="settings-group-title">Backup & Export</span>
+          <button class="upload-btn" id="btn-export-json" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <i data-lucide="download" style="width: 16px; height: 16px;"></i>
+            Export JSON with Progress
+          </button>
+          <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 6px; line-height: 1.35;">
+            Note: Import this exported JSON file next time to restore your reading progress.
+          </p>
+        </div>
+
         <button class="reset-btn" id="btn-reset-data">
           <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
           Clear Progress & Cache
@@ -1038,7 +1304,7 @@
       </div>
     </div>
 
-    <!-- Floating FAB to resume reading -->
+    <!-- Resume FAB -->
     <button class="resume-fab" id="resume-fab">
       <i data-lucide="play" style="width: 18px; height: 18px; fill: white;"></i>
       <span>Resume Reading</span>
@@ -1048,14 +1314,17 @@
 
   <!-- Fullscreen Immersive Reader Mode -->
   <div class="reader-overlay" id="reader-overlay">
+    <!-- Fixed Reader Header -->
     <div class="reader-header">
       <div class="reader-header-left">
         <button class="icon-btn" id="reader-back" aria-label="Back to dashboard">
           <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
         </button>
         <div class="reader-title-area">
-          <span class="reader-chapter-name" id="reader-chapter-title">Chapter 1</span>
-          <h2 class="reader-section-title" id="reader-sec-title">The Legend of the Watchmaker</h2>
+          <div class="reader-breadcrumb" id="reader-breadcrumb">
+            <!-- Loaded dynamically -->
+          </div>
+          <h2 class="reader-section-title" id="reader-sec-title">Section Title</h2>
         </div>
       </div>
       <div>
@@ -1065,20 +1334,22 @@
       </div>
     </div>
 
-    <div class="reader-content-container">
-      <!-- Short summary at top to refresh mind before diving deep -->
-      <div class="reader-summary-preview">
-        <div class="reader-summary-label">Summary Summary</div>
-        <p id="reader-summary-txt"></p>
-      </div>
+    <!-- Scrollable content window (Prevents floating action bar from moving) -->
+    <div class="reader-scroll-body" id="reader-scroll-body">
+      <div class="reader-content-container">
 
-      <!-- Unabridged Full Text -->
-      <div class="reader-body-text" id="reader-body-content">
-        <!-- Rendered dynamically -->
+        <div class="reader-summary-preview">
+          <div class="reader-summary-label">Summary Overview</div>
+          <p id="reader-summary-txt"></p>
+        </div>
+
+        <div class="reader-body-text font-serif" id="reader-body-content">
+          <!-- Rendered dynamically -->
+        </div>
       </div>
     </div>
 
-    <!-- Floating navigation action controls for easy one-hand usage -->
+    <!-- Pinned bottom player bar (Will NEVER scroll along with text) -->
     <div class="reader-footer-actions">
       <button class="footer-action-btn" id="reader-prev-sec">
         <i data-lucide="skip-back" style="width: 20px; height: 20px;"></i>
@@ -1100,20 +1371,93 @@
   </div>
 
   <script>
-    // App State Management
+    // State values
+    const PARSER_PROMPT = `You are an expert AI Data Processing Agent specializing in high-fidelity book parsing, summarization, and JSON conversion. 
+
+Your task is to parse a PDF book and structure it into a specific hierarchical JSON format suited for a mobile reader.
+
+### 📋 JSON SCHEMA REFERENCE:
+The target format is:
+{
+  "bookId": "kebab-case-unique-id",
+  "title": "Book Title",
+  "author": "Author Name",
+  "summary": {
+    "coreThesis": "One-page comprehensive book summary (exactly 400-500 words).",
+    "keyTakeaways": [
+      "Takeaway 1",
+      "Takeaway 2"
+    ]
+  },
+  "chapters": [
+    {
+      "chapterId": "ch-1",
+      "chapterNumber": 1,
+      "title": "Chapter Title",
+      "summary": {
+        "coreIdea": "Chapter main idea summary",
+        "keyInsights": ["Insight 1", "Insight 2"]
+      },
+      "sections": [
+        {
+          "sectionId": "sec-1-1",
+          "title": "Section/Topic/Story Title",
+          "type": "story" | "topic",
+          "summary": "Rich summary (~10% of the unabridged text length)",
+          "unabridgedText": "Full unabridged text content...",
+          "sections": [] // Optional recursive nested subsections
+        }
+      ]
+    }
+  ]
+}
+
+---
+
+### 🛠️ WORKFLOW RULES & GUIDELINES:
+
+1. **Interactive Scope Selection (Before Parsing)**
+   - Before writing any JSON, ask me:
+     * "Which chapters or page ranges do you want to process in this turn?"
+     * Wait for my response before proceeding.
+
+2. **Incremental Appending & Resuming**
+   - We will build this book JSON incrementally. 
+   - If this is a **new session**, initialize the root metadata (`bookId`, `title`, `author`, `summary`).
+   - If this is a **resumed session**:
+     * I will provide the existing JSON and point you to the last processed section/chapter.
+     * Identify where we left off, ask for confirmation, and append the new chapters/sections seamlessly into the schema array without losing existing nodes.
+
+3. **Rich Summarization Constraints**
+   - **Section Summaries (Story/Topic mode)**: Each summary must be a rich, descriptive overview that is approximately **10%** of the word count of its corresponding `unabridgedText`. Avoid shallow one-sentence descriptions.
+   - **Book Core Thesis Summary**: This root-level summary must be exactly **one page** (~400-500 words), covering the complete scope of the book comprehensively.
+
+4. **100% Unabridged Text Preservation**
+   - Never truncate, edit, or paraphrase the text going into the `unabridgedText` fields. Keep it exact, including paragraphs, dialogues, and punctuation.
+
+---
+
+### 🚀 LET'S START:
+
+To begin, please ask me:
+1. The title/author of the book (or upload the text file/PDF).
+2. Which chapters or page range we should process for this first run.
+3. Whether we are starting fresh or resuming a previous JSON build.`;
+
     let bookData = null;
     let readingProgress = {
       completedSections: {}, // sectionId -> boolean
       lastReadSectionId: null,
       lastReadChapterId: null,
-      scrollPositions: {} // sectionId -> percentage
+      scrollPositions: {} // sectionId -> scrollRatio
     };
     let userPreferences = {
       theme: 'amoled',
-      fontSize: 18
+      fontSize: 18,
+      fontStyle: 'serif'
     };
 
-    // DOM Elements
+    // DOM References
     const elements = {
       title: document.getElementById('app-title'),
       author: document.getElementById('app-author'),
@@ -1130,20 +1474,26 @@
       settingsDrawer: document.getElementById('settings-drawer'),
       settingsOverlay: document.getElementById('settings-overlay'),
       themeOpts: document.querySelectorAll('.theme-opt'),
+      fontStyleOpts: document.querySelectorAll('.font-style-opt'),
       fontDec: document.getElementById('font-dec'),
       fontInc: document.getElementById('font-inc'),
       fontSizeLbl: document.getElementById('font-size-lbl'),
       resetProgressBtn: document.getElementById('btn-reset-data'),
+      exportProgressBtn: document.getElementById('btn-export-json'),
+      promptCopierCard: document.getElementById('prompt-copier-card'),
+      copyPromptBtn: document.getElementById('btn-copy-prompt'),
       resumeFab: document.getElementById('resume-fab'),
       progressBar: document.getElementById('progress-bar-indicator'),
+      scrollPill: document.getElementById('scroll-progress-pill'),
 
       // Reader UI Elements
       readerOverlay: document.getElementById('reader-overlay'),
+      readerScrollBody: document.getElementById('reader-scroll-body'),
       readerBack: document.getElementById('reader-back'),
       readerMarkRead: document.getElementById('reader-mark-read'),
       readerCheckIcon: document.getElementById('reader-check-icon'),
-      readerChapterTitle: document.getElementById('reader-chapter-title'),
       readerSecTitle: document.getElementById('reader-sec-title'),
+      readerBreadcrumb: document.getElementById('reader-breadcrumb'),
       readerSummaryTxt: document.getElementById('reader-summary-txt'),
       readerBodyContent: document.getElementById('reader-body-content'),
       readerPrevSec: document.getElementById('reader-prev-sec'),
@@ -1161,6 +1511,7 @@
       }
       applyTheme(userPreferences.theme);
       applyFontSize(userPreferences.fontSize);
+      applyFontStyle(userPreferences.fontStyle || 'serif');
 
       // 2. Setup Events
       setupEventListeners();
@@ -1180,14 +1531,10 @@
     }
 
     function setupEventListeners() {
-      // Browse button & File input selection
       elements.browseBtn.addEventListener('click', () => elements.fileInput.click());
       elements.fileInput.addEventListener('change', handleFileSelect);
-
-      // Loading sample button
       elements.loadSampleBtn.addEventListener('click', loadSampleData);
 
-      // Drag and drop events
       elements.uploader.addEventListener('dragover', (e) => {
         e.preventDefault();
         elements.uploader.classList.add('dragover');
@@ -1206,12 +1553,10 @@
         }
       });
 
-      // Settings Drawer toggling
       elements.openSettings.addEventListener('click', toggleSettingsDrawer);
       elements.closeSettings.addEventListener('click', toggleSettingsDrawer);
       elements.settingsOverlay.addEventListener('click', toggleSettingsDrawer);
 
-      // Themes changes
       elements.themeOpts.forEach(btn => {
         btn.addEventListener('click', () => {
           const t = btn.getAttribute('data-val');
@@ -1220,7 +1565,14 @@
         });
       });
 
-      // Font size changes
+      elements.fontStyleOpts.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const style = btn.getAttribute('data-val');
+          applyFontStyle(style);
+          savePreferences();
+        });
+      });
+
       elements.fontInc.addEventListener('click', () => {
         if (userPreferences.fontSize < 30) {
           userPreferences.fontSize += 2;
@@ -1236,7 +1588,25 @@
         }
       });
 
-      // Reset application cache/progress
+      elements.exportProgressBtn.addEventListener('click', exportBookJsonWithProgress);
+
+      elements.copyPromptBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(PARSER_PROMPT).then(() => {
+          const span = elements.copyPromptBtn.querySelector('span');
+          const icon = elements.copyPromptBtn.querySelector('i');
+          span.textContent = "Copied!";
+          icon.setAttribute('data-lucide', 'check');
+          lucide.createIcons();
+          setTimeout(() => {
+            span.textContent = "Copy Parser Prompt";
+            icon.setAttribute('data-lucide', 'copy');
+            lucide.createIcons();
+          }, 2000);
+        }).catch(err => {
+          alert("Failed to copy text. Please copy manually from the README file.");
+        });
+      });
+
       elements.resetProgressBtn.addEventListener('click', () => {
         if (confirm("Are you sure you want to clear all reading progress and preferences?")) {
           localStorage.removeItem('reader_prefs');
@@ -1245,14 +1615,12 @@
         }
       });
 
-      // Floating Action Button
       elements.resumeFab.addEventListener('click', () => {
         if (readingProgress.lastReadSectionId) {
           openReaderMode(readingProgress.lastReadSectionId);
         }
       });
 
-      // Reader Mode Specific Controls
       elements.readerBack.addEventListener('click', closeReaderMode);
       
       elements.readerMarkRead.addEventListener('click', () => {
@@ -1260,19 +1628,35 @@
         toggleSectionRead(activeSectionId);
       });
 
-      // Next / Prev Sections
       elements.readerPrevSec.addEventListener('click', navigatePrevious);
       elements.readerNextSec.addEventListener('click', navigateNext);
       elements.readerToggleTheme.addEventListener('click', cycleThemes);
       elements.readerAdjustFont.addEventListener('click', () => {
-        let size = userPreferences.fontSize + 2;
-        if (size > 26) size = 14;
-        applyFontSize(size);
+        const styles = ['serif', 'sans', 'mono'];
+        let idx = styles.indexOf(userPreferences.fontStyle);
+        idx = (idx + 1) % styles.length;
+        applyFontStyle(styles[idx]);
         savePreferences();
       });
 
-      // Track reader scroll progress for progress saving
-      elements.readerOverlay.addEventListener('scroll', throttle(saveScrollPosition, 500));
+      elements.readerScrollBody.addEventListener('scroll', throttle(saveScrollPosition, 500));
+
+      // Scroll progress indicator for Abridged summaries screen
+      let mainScrollTimeout = null;
+      window.addEventListener('scroll', () => {
+        if (!bookData) return;
+        
+        elements.scrollPill.classList.add('visible');
+
+        const globalPercentage = Math.round(calculateOverallProgress());
+        elements.scrollPill.textContent = `Book Completed: ${globalPercentage}%`;
+
+        if (mainScrollTimeout) clearTimeout(mainScrollTimeout);
+
+        mainScrollTimeout = setTimeout(() => {
+          elements.scrollPill.classList.remove('visible');
+        }, 1200);
+      });
     }
 
     // Load Local Book JSON Data
@@ -1299,42 +1683,88 @@
       fetch('sample_book.json')
         .then(res => res.json())
         .then(data => loadBookData(data))
-        .catch(err => alert("Could not fetch sample data locally. Run a local server or select a JSON file."));
+        .catch(err => alert("Could not fetch sample data locally. Select a JSON file."));
+    }
+
+    // Progress Calculations
+    function getLeafSections(node) {
+      const leafs = [];
+      function traverse(n) {
+        if (!n.sections || n.sections.length === 0) {
+          leafs.push(n);
+        } else {
+          n.sections.forEach(traverse);
+        }
+      }
+      traverse(node);
+      return leafs;
+    }
+
+    function calculateSectionCompletion(section) {
+      const leafs = getLeafSections(section);
+      if (leafs.length === 0) return 0;
+      const completed = leafs.filter(l => readingProgress.completedSections[l.sectionId]).length;
+      return (completed / leafs.length) * 100;
+    }
+
+    function calculateChapterCompletion(chapter) {
+      let leafs = [];
+      chapter.sections.forEach(sec => {
+        leafs = leafs.concat(getLeafSections(sec));
+      });
+      if (leafs.length === 0) return 0;
+      const completed = leafs.filter(l => readingProgress.completedSections[l.sectionId]).length;
+      return (completed / leafs.length) * 100;
+    }
+
+    function calculateOverallProgress() {
+      if (!bookData) return 0;
+      let leafs = [];
+      bookData.chapters.forEach(ch => {
+        ch.sections.forEach(sec => {
+          leafs = leafs.concat(getLeafSections(sec));
+        });
+      });
+      if (leafs.length === 0) return 0;
+      const completed = leafs.filter(l => readingProgress.completedSections[l.sectionId]).length;
+      return (completed / leafs.length) * 100;
+    }
+
+    function isSectionCompleted(section) {
+      const leafs = getLeafSections(section);
+      if (leafs.length === 0) return !!readingProgress.completedSections[section.sectionId];
+      return leafs.every(l => readingProgress.completedSections[l.sectionId]);
     }
 
     // Load Book Data into Layout
     function loadBookData(data) {
       bookData = data;
       
-      // Update UI title/authors
-      elements.title.textContent = data.title;
-      elements.author.textContent = `by ${data.author}`;
-      document.title = `${data.title} - Unabridged Reader`;
+      elements.title.textContent = bookData.title || "Book Reader";
 
-      // Render book summaries
-      elements.thesis.textContent = data.summary.coreThesis;
+      elements.uploader.classList.add('hidden');
+      elements.promptCopierCard.classList.add('hidden');
+      elements.dashboard.classList.remove('hidden');
+      elements.chaptersList.classList.remove('hidden');
+
+      loadReadingProgress();
+      updateUI();
+    }
+
+    function updateUI() {
+      elements.thesis.textContent = bookData.summary.coreThesis;
       elements.takeaways.innerHTML = '';
-      data.summary.keyTakeaways.forEach(takeaway => {
+      bookData.summary.keyTakeaways.forEach(takeaway => {
         const li = document.createElement('li');
         li.textContent = takeaway;
         elements.takeaways.appendChild(li);
       });
 
-      // Hide uploader, show workspace
-      elements.uploader.classList.add('hidden');
-      elements.dashboard.classList.remove('hidden');
-      elements.chaptersList.classList.remove('hidden');
+      const globalPercentage = Math.round(calculateOverallProgress());
+      elements.author.textContent = `${bookData.author || 'Unknown Author'} • ${globalPercentage}% completed`;
 
-      // Load specific reading progress
-      loadReadingProgress();
-
-      // Render chapters and sections
       renderChaptersList();
-
-      // Check if we should display Resume FAB
       updateResumeFab();
-      
-      // Update total reading progress bar
       updateGlobalProgressBar();
 
       lucide.createIcons();
@@ -1349,20 +1779,18 @@
         card.className = 'chapter-card';
         card.id = `chapter-card-${chapter.chapterId}`;
         
-        // Auto-expand first chapter if no progress is saved
-        if (chIdx === 0 && !readingProgress.lastReadChapterId) {
+        if (!readingProgress.lastReadChapterId && chIdx === 0) {
           card.classList.add('expanded');
         } else if (readingProgress.lastReadChapterId === chapter.chapterId) {
           card.classList.add('expanded');
         }
 
-        const isLastReadCh = readingProgress.lastReadChapterId === chapter.chapterId;
+        const chPercent = Math.round(calculateChapterCompletion(chapter));
 
-        // Render header
         card.innerHTML = `
           <div class="chapter-header" onclick="toggleChapter('${chapter.chapterId}')">
             <div class="chapter-header-left">
-              <span class="chapter-number">Chapter ${chapter.chapterNumber}</span>
+              <span class="chapter-number">Chapter ${chapter.chapterNumber} • ${chPercent}% Completed</span>
               <h3 class="chapter-title">${chapter.title}</h3>
             </div>
             <i data-lucide="chevron-down" class="chevron-icon"></i>
@@ -1372,55 +1800,86 @@
               <p>${chapter.summary.coreIdea}</p>
             </div>
             <div class="sections-container" id="sections-for-${chapter.chapterId}">
-              <!-- Sections populated dynamically -->
+              <!-- Recursive layout tree loaded here -->
             </div>
           </div>
         `;
 
         elements.chaptersList.appendChild(card);
 
-        // Populate sections
         const sectionsBox = document.getElementById(`sections-for-${chapter.chapterId}`);
         chapter.sections.forEach(section => {
-          const secCard = document.createElement('div');
-          secCard.className = 'section-card';
-          secCard.id = `sec-card-${section.sectionId}`;
-
-          const isCompleted = !!readingProgress.completedSections[section.sectionId];
-
-          secCard.innerHTML = `
-            <div class="section-card-header">
-              <div class="section-card-title-area" onclick="toggleSectionCollapse('${section.sectionId}')">
-                <div class="checkbox-container ${isCompleted ? 'checked' : ''}" id="check-box-${section.sectionId}" onclick="event.stopPropagation(); toggleSectionRead('${section.sectionId}')">
-                  <i data-lucide="${isCompleted ? 'check-circle' : 'circle'}" class="checkbox-icon" style="width: 18px; height: 18px;"></i>
-                </div>
-                <span class="section-card-title">${section.title}</span>
-                <span class="badge badge-${section.type}">${section.type}</span>
-              </div>
-              <div onclick="toggleSectionCollapse('${section.sectionId}')" style="padding: 4px; display: flex; align-items: center;">
-                <i data-lucide="chevron-down" class="section-chevron" style="width: 16px; height: 16px;"></i>
-              </div>
-            </div>
-            <div class="section-card-body">
-              <p class="section-summary-text">${section.summary}</p>
-              <button class="btn-read-full" onclick="openReaderMode('${section.sectionId}')">
-                <i data-lucide="book-open" style="width: 14px; height: 14px;"></i>
-                Read Full Unabridged Text
-              </button>
-            </div>
-          `;
-          sectionsBox.appendChild(secCard);
+          renderSectionNode(section, sectionsBox, 0);
         });
       });
     }
 
-    // Toggle Collapsibles
+    // Recursive rendering helper
+    function renderSectionNode(section, containerEl, depth = 0) {
+      const secCard = document.createElement('div');
+      secCard.className = `section-card depth-${depth}`;
+      secCard.id = `sec-card-${section.sectionId}`;
+
+      const hasChildren = section.sections && section.sections.length > 0;
+      const isCompleted = isSectionCompleted(section);
+
+      let headerControlHtml = '';
+      if (!hasChildren) {
+        headerControlHtml = `
+          <div class="checkbox-container ${isCompleted ? 'checked' : ''}" id="check-box-${section.sectionId}" onclick="event.stopPropagation(); toggleSectionRead('${section.sectionId}')">
+            <i data-lucide="${isCompleted ? 'check-circle' : 'circle'}" class="checkbox-icon" style="width: 18px; height: 18px;"></i>
+          </div>
+        `;
+      } else {
+        const secPercent = Math.round(calculateSectionCompletion(section));
+        headerControlHtml = `
+          <div class="parent-progress-badge" onclick="event.stopPropagation();">
+            <span>${secPercent}%</span>
+          </div>
+        `;
+      }
+
+      // Border Badge Overlay (Top right, like core idea but right-aligned)
+      const badgeHtml = `<span class="section-badge-overlay badge-${section.type}">${section.type}</span>`;
+
+      secCard.innerHTML = `
+        ${badgeHtml}
+        <div class="section-card-header ${hasChildren ? 'has-children' : ''}" onclick="toggleSectionCollapse('${section.sectionId}')">
+          <div class="section-card-title-area">
+            ${headerControlHtml}
+            <span class="section-card-title">${section.title}</span>
+          </div>
+          <div style="padding: 4px; display: flex; align-items: center;">
+            <i data-lucide="chevron-down" class="section-chevron" style="width: 16px; height: 16px;"></i>
+          </div>
+        </div>
+        <div class="section-card-body">
+          ${section.summary ? `<p class="section-summary-text">${section.summary}</p>` : ''}
+          ${section.unabridgedText ? `
+            <button class="btn-read-full" onclick="openReaderMode('${section.sectionId}')">
+              <i data-lucide="book-open" style="width: 14px; height: 14px;"></i>
+              Read Full Unabridged Text
+            </button>
+          ` : ''}
+          ${hasChildren ? `<div class="nested-sections" id="nested-for-${section.sectionId}"></div>` : ''}
+        </div>
+      `;
+
+      containerEl.appendChild(secCard);
+
+      if (hasChildren) {
+        const nestedBox = document.getElementById(`nested-for-${section.sectionId}`);
+        section.sections.forEach(child => {
+          renderSectionNode(child, nestedBox, depth + 1);
+        });
+      }
+    }
+
     window.toggleChapter = function(chapterId) {
       const card = document.getElementById(`chapter-card-${chapterId}`);
       if (card) {
         const wasExpanded = card.classList.contains('expanded');
         
-        // Collapse all others
         document.querySelectorAll('.chapter-card').forEach(c => c.classList.remove('expanded'));
         
         if (!wasExpanded) {
@@ -1435,41 +1894,33 @@
       const card = document.getElementById(`sec-card-${sectionId}`);
       if (card) {
         const wasExpanded = card.classList.contains('expanded');
-        // Close other sections in this chapter
-        card.parentElement.querySelectorAll('.section-card').forEach(s => s.classList.remove('expanded'));
         
+        const siblings = card.parentElement.children;
+        for (let sib of siblings) {
+          if (sib.id !== `sec-card-${sectionId}`) {
+            sib.classList.remove('expanded');
+          }
+        }
+
         if (!wasExpanded) {
           card.classList.add('expanded');
+        } else {
+          card.classList.remove('expanded');
         }
       }
     };
 
-    // Checkbox reading toggle
     window.toggleSectionRead = function(sectionId) {
       const isCompleted = !readingProgress.completedSections[sectionId];
       readingProgress.completedSections[sectionId] = isCompleted;
 
-      // Update Dashboard checklist status
-      const box = document.getElementById(`check-box-${sectionId}`);
-      if (box) {
-        if (isCompleted) {
-          box.classList.add('checked');
-          box.innerHTML = `<i data-lucide="check-circle" class="checkbox-icon" style="width: 18px; height: 18px; color: var(--read-color);"></i>`;
-        } else {
-          box.classList.remove('checked');
-          box.innerHTML = `<i data-lucide="circle" class="checkbox-icon" style="width: 18px; height: 18px;"></i>`;
-        }
-        lucide.createIcons();
-      }
+      saveReadingProgress();
+      updateUI();
 
-      // Update Reader Overlay checklist status if currently open
       const overlayActiveSec = elements.readerMarkRead.getAttribute('data-active-sec');
       if (overlayActiveSec === sectionId) {
         updateReaderCheckIcon(isCompleted);
       }
-
-      saveReadingProgress();
-      updateGlobalProgressBar();
     }
 
     function updateReaderCheckIcon(isCompleted) {
@@ -1483,38 +1934,89 @@
       lucide.createIcons();
     }
 
-    // Reader Mode Implementation
+    // Walk up the tree from section ID to find all parents
+    function findSectionPath(chapters, targetId) {
+      let path = [];
+      
+      function search(node, currentPath) {
+        if (node.sectionId === targetId) {
+          path = currentPath;
+          return true;
+        }
+        if (node.sections) {
+          for (let child of node.sections) {
+            if (search(child, [...currentPath, node.title])) {
+              return true;
+            }
+          }
+        }
+        return false;
+      }
+
+      for (let ch of chapters) {
+        const chapterLabel = `Chapter ${ch.chapterNumber}: ${ch.title}`;
+        for (let sec of ch.sections) {
+          if (search(sec, [chapterLabel])) {
+            return path;
+          }
+        }
+      }
+      return path;
+    }
+
+    // Fullscreen reader
     window.openReaderMode = function(sectionId) {
-      // Find section info
       let section = null;
       let chapter = null;
       
-      for (const ch of bookData.chapters) {
-        section = ch.sections.find(s => s.sectionId === sectionId);
-        if (section) {
+      function findSection(node, ch) {
+        if (node.sectionId === sectionId) {
+          section = node;
           chapter = ch;
-          break;
+          return true;
         }
+        if (node.sections) {
+          for (let child of node.sections) {
+            if (findSection(child, ch)) return true;
+          }
+        }
+        return false;
+      }
+
+      for (const ch of bookData.chapters) {
+        for (const sec of ch.sections) {
+          if (findSection(sec, ch)) break;
+        }
+        if (section) break;
       }
 
       if (!section || !chapter) return;
 
-      // Populate reader content
-      elements.readerChapterTitle.textContent = `Chapter ${chapter.chapterNumber}: ${chapter.title}`;
+      // Render Header Title info
       elements.readerSecTitle.textContent = section.title;
+      
+      // Render Breadcrumb (Hierarchy Path)
+      const path = findSectionPath(bookData.chapters, sectionId);
+      if (path && path.length > 0) {
+        elements.readerBreadcrumb.style.display = 'flex';
+        elements.readerBreadcrumb.innerHTML = path.map((title, idx) => {
+          return `<span>${title}</span>` + (idx < path.length - 1 ? ` <i data-lucide="chevron-right" style="width: 10px; height: 10px; margin: 0 2px; color: var(--text-muted);"></i> ` : '');
+        }).join('');
+      } else {
+        elements.readerBreadcrumb.style.display = 'none';
+      }
+
       elements.readerSummaryTxt.textContent = section.summary;
       
-      // Convert raw text into paragraphs
       const bodyHtml = section.unabridgedText.split('\n\n')
         .map(para => `<p>${para.replace(/\n/g, ' ')}</p>`)
         .join('');
       elements.readerBodyContent.innerHTML = bodyHtml;
 
-      // Mark check status
       elements.readerMarkRead.setAttribute('data-active-sec', sectionId);
       updateReaderCheckIcon(!!readingProgress.completedSections[sectionId]);
 
-      // Handle next/prev controls status
+      // Set Next / Prev state
       const flatSections = getFlatSectionsList();
       const idx = flatSections.findIndex(s => s.sectionId === sectionId);
       elements.readerPrevSec.disabled = (idx === 0);
@@ -1522,42 +2024,51 @@
       elements.readerPrevSec.style.opacity = (idx === 0) ? '0.3' : '1';
       elements.readerNextSec.style.opacity = (idx === flatSections.length - 1) ? '0.3' : '1';
 
-      // Open Reader Screen
+      // Open Screen Overlay & Reset Scroll
       elements.readerOverlay.style.display = 'flex';
       setTimeout(() => {
         elements.readerOverlay.classList.add('active');
-        // Restore scroll position
+        
+        // Restore scroll position within the locked scroll container
         const savedScroll = readingProgress.scrollPositions[sectionId] || 0;
-        const scrollHeight = elements.readerOverlay.scrollHeight - elements.readerOverlay.clientHeight;
-        elements.readerOverlay.scrollTop = savedScroll * scrollHeight;
+        const scrollHeight = elements.readerScrollBody.scrollHeight - elements.readerScrollBody.clientHeight;
+        elements.readerScrollBody.scrollTop = savedScroll * scrollHeight;
       }, 50);
 
-      // Record reading history state
       readingProgress.lastReadSectionId = sectionId;
       readingProgress.lastReadChapterId = chapter.chapterId;
       saveReadingProgress();
       updateResumeFab();
+      lucide.createIcons();
     }
 
     function closeReaderMode() {
       elements.readerOverlay.classList.remove('active');
       setTimeout(() => {
         elements.readerOverlay.style.display = 'none';
-        // Scroll to the active section card on back
+        
         const card = document.getElementById(`sec-card-${readingProgress.lastReadSectionId}`);
         if (card) {
+          let parent = card.parentElement;
+          while (parent && parent.id !== 'chapters-list-container') {
+            if (parent.classList.contains('section-card')) {
+              parent.classList.add('expanded');
+            } else if (parent.classList.contains('chapter-card')) {
+              parent.classList.add('expanded');
+            }
+            parent = parent.parentElement;
+          }
           card.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }, 350);
     }
 
-    // Navigation inside reader
     function navigatePrevious() {
       const flat = getFlatSectionsList();
       const currentId = elements.readerMarkRead.getAttribute('data-active-sec');
       const idx = flat.findIndex(s => s.sectionId === currentId);
       if (idx > 0) {
-        elements.readerOverlay.scrollTop = 0;
+        elements.readerScrollBody.scrollTop = 0;
         openReaderMode(flat[idx - 1].sectionId);
       }
     }
@@ -1567,13 +2078,13 @@
       const currentId = elements.readerMarkRead.getAttribute('data-active-sec');
       const idx = flat.findIndex(s => s.sectionId === currentId);
       if (idx < flat.length - 1) {
-        elements.readerOverlay.scrollTop = 0;
+        elements.readerScrollBody.scrollTop = 0;
         openReaderMode(flat[idx + 1].sectionId);
       }
     }
 
     function cycleThemes() {
-      const themes = ['amoled', 'dim', 'sepia'];
+      const themes = ['amoled', 'dim', 'sepia', 'forest', 'nordic', 'contrast'];
       let idx = themes.indexOf(userPreferences.theme);
       idx = (idx + 1) % themes.length;
       applyTheme(themes[idx]);
@@ -1582,22 +2093,41 @@
 
     function getFlatSectionsList() {
       const list = [];
+      function traverse(node) {
+        if (node.unabridgedText) {
+          list.push(node);
+        }
+        if (node.sections && node.sections.length > 0) {
+          node.sections.forEach(traverse);
+        }
+      }
+
       bookData.chapters.forEach(ch => {
-        ch.sections.forEach(sec => {
-          list.push(sec);
-        });
+        ch.sections.forEach(traverse);
       });
       return list;
     }
 
-    // Theme & Preferences Adjusters
+    // Themes & Font Styles
     function applyTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
       userPreferences.theme = theme;
       
-      // Update UI active buttons
       elements.themeOpts.forEach(btn => {
         if (btn.getAttribute('data-val') === theme) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    function applyFontStyle(style) {
+      userPreferences.fontStyle = style;
+      elements.readerBodyContent.className = `reader-body-text font-${style}`;
+      
+      elements.fontStyleOpts.forEach(btn => {
+        if (btn.getAttribute('data-val') === style) {
           btn.classList.add('active');
         } else {
           btn.classList.remove('active');
@@ -1616,7 +2146,6 @@
       elements.settingsOverlay.classList.toggle('active');
     }
 
-    // Data persistence LocalStorage
     function savePreferences() {
       localStorage.setItem('reader_prefs', JSON.stringify(userPreferences));
     }
@@ -1625,7 +2154,12 @@
       if (!bookData) return;
       const progressKey = `book_progress_${bookData.bookId}`;
       const saved = localStorage.getItem(progressKey);
-      if (saved) {
+      if (bookData.progress) {
+        readingProgress = JSON.parse(JSON.stringify(bookData.progress));
+        if (!readingProgress.completedSections) readingProgress.completedSections = {};
+        if (!readingProgress.scrollPositions) readingProgress.scrollPositions = {};
+        saveReadingProgress();
+      } else if (saved) {
         readingProgress = JSON.parse(saved);
         if (!readingProgress.completedSections) readingProgress.completedSections = {};
         if (!readingProgress.scrollPositions) readingProgress.scrollPositions = {};
@@ -1645,12 +2179,35 @@
       localStorage.setItem(progressKey, JSON.stringify(readingProgress));
     }
 
+    function exportBookJsonWithProgress() {
+      if (!bookData) {
+        alert("No book data loaded to export.");
+        return;
+      }
+      const exportData = JSON.parse(JSON.stringify(bookData));
+      exportData.progress = readingProgress;
+      
+      const jsonString = JSON.stringify(exportData, null, 2);
+      const blob = new Blob([jsonString], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      
+      const link = document.createElement("a");
+      const fileName = `${bookData.bookId || 'book'}_with_progress.json`;
+      link.href = url;
+      link.download = fileName;
+      
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
     function saveScrollPosition() {
       const activeSectionId = elements.readerMarkRead.getAttribute('data-active-sec');
       if (!activeSectionId) return;
 
-      const scrollTop = elements.readerOverlay.scrollTop;
-      const scrollHeight = elements.readerOverlay.scrollHeight - elements.readerOverlay.clientHeight;
+      const scrollTop = elements.readerScrollBody.scrollTop;
+      const scrollHeight = elements.readerScrollBody.scrollHeight - elements.readerScrollBody.clientHeight;
       if (scrollHeight > 0) {
         const percent = scrollTop / scrollHeight;
         readingProgress.scrollPositions[activeSectionId] = percent;
@@ -1667,22 +2224,10 @@
     }
 
     function updateGlobalProgressBar() {
-      if (!bookData) return;
-      const flat = getFlatSectionsList();
-      if (flat.length === 0) return;
-
-      let completedCount = 0;
-      flat.forEach(sec => {
-        if (readingProgress.completedSections[sec.sectionId]) {
-          completedCount++;
-        }
-      });
-
-      const percent = (completedCount / flat.length) * 100;
+      const percent = calculateOverallProgress();
       elements.progressBar.style.width = `${percent}%`;
     }
 
-    // Utility functions
     function throttle(func, limit) {
       let inThrottle;
       return function() {
@@ -1696,7 +2241,7 @@
       }
     }
 
-    // Fire Init
+    // Run Init
     init();
   </script>
 </body>
