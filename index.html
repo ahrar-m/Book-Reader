@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="amoled">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Book Reader - Mobile Optimized</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* CSS Variables for Themes */
+    :root[data-theme="amoled"] {
+      --bg-color: #000000;
+      --surface-color: #0d0d0d;
+      --border-color: #222222;
+      --text-main: #e2e8f0;
+      --text-muted: #8e9cae;
+      --accent-color: #5856d6;
+      --accent-hover: #6e6cf0;
+      --card-bg: #0b0b0f;
+      --nav-bg: rgba(0, 0, 0, 0.85);
+      --badge-story-bg: rgba(255, 149, 0, 0.15);
+      --badge-story-text: #ff9500;
+      --badge-topic-bg: rgba(90, 200, 250, 0.15);
+      --badge-topic-text: #5ac8fa;
+      --read-color: #34c759;
+      --reader-bg: #050505;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.5);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.7);
+    }
+
+    :root[data-theme="sepia"] {
+      --bg-color: #fcf8f2;
+      --surface-color: #f5eedf;
+      --border-color: #e6dac3;
+      --text-main: #3c2f2f;
+      --text-muted: #7d6e65;
+      --accent-color: #8c6239;
+      --accent-hover: #a67c52;
+      --card-bg: #faf4eb;
+      --nav-bg: rgba(252, 248, 242, 0.9);
+      --badge-story-bg: rgba(140, 98, 57, 0.15);
+      --badge-story-text: #8c6239;
+      --badge-topic-bg: rgba(60, 110, 113, 0.15);
+      --badge-topic-text: #3c6e71;
+      --read-color: #2a7b4c;
+      --reader-bg: #fdfaf5;
+      --shadow-sm: 0 2px 8px rgba(140, 98, 57, 0.08);
+      --shadow-md: 0 4px 20px rgba(140, 98, 57, 0.12);
+    }
+
+    :root[data-theme="dim"] {
+      --bg-color: #121824;
+      --surface-color: #1a2333;
+      --border-color: #2d3b54;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent-color: #3b82f6;
+      --accent-hover: #60a5fa;
+      --card-bg: #1e293b;
+      --nav-bg: rgba(18, 24, 36, 0.9);
+      --badge-story-bg: rgba(245, 158, 11, 0.15);
+      --badge-story-text: #f59e0b;
+      --badge-topic-bg: rgba(14, 165, 233, 0.15);
+      --badge-topic-text: #0ea5e9;
+      --read-color: #10b981;
+      --reader-bg: #0f141e;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    /* Core Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      transition: background-color 0.4s ease, color 0.4s ease;
+      line-height: 1.5;
+      font-size: 16px;
+      overflow-x: hidden;
+      /* Smooth scrolling */
+      scroll-behavior: smooth;
+    }
+
+    /* Standard Mobile Layout Constraints (Optimized for 20:9 viewport like OnePlus 8T) */
+    .app-container {
+      width: 100%;
+      max-width: 600px; /* Perfect reading column width */
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 80px; /* Safe space for floating bar */
+      position: relative;
+    }
+
+    /* Typography & Titles */
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    /* Header Component */
+    header {
+      background-color: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: border-color 0.4s ease, background-color 0.4s ease;
+    }
+
+    .header-info {
+      flex: 1;
+      min-width: 0;
+      margin-right: 12px;
+    }
+
+    .book-title {
+      font-size: 1.15rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text-main);
+    }
+
+    .book-author {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s;
+    }
+
+    .icon-btn:active {
+      background-color: var(--border-color);
+    }
+
+    /* Reading Progress Bar on Header */
+    .progress-track {
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent-color);
+      transition: width 0.3s ease;
+    }
+
+    /* Dashboard & Intro Card */
+    .main-content {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .dashboard-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent-color);
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .thesis-text {
+      color: var(--text-main);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .takeaways-list {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .takeaways-list li {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .takeaways-list li::before {
+      content: "✦";
+      position: absolute;
+      left: 0;
+      color: var(--accent-color);
+    }
+
+    /* File Uploader View (Fallback & setup) */
+    .uploader-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      border: 2px dashed var(--border-color);
+      border-radius: 18px;
+      margin: 20px;
+      background-color: var(--card-bg);
+      transition: border-color 0.3s;
+    }
+
+    .uploader-container.dragover {
+      border-color: var(--accent-color);
+      background-color: rgba(88, 86, 214, 0.05);
+    }
+
+    .uploader-icon {
+      color: var(--accent-color);
+      margin-bottom: 16px;
+    }
+
+    .uploader-title {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .uploader-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 300px;
+    }
+
+    .upload-btn {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .upload-btn:active {
+      background-color: var(--accent-hover);
+    }
+
+    #file-input {
+      display: none;
+    }
+
+    /* Chapter List Card */
+    .chapter-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .chapter-header {
+      padding: 18px 20px;
+      background-color: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .chapter-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .chapter-number {
+      font-size: 0.75rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-color);
+    }
+
+    .chapter-title {
+      font-size: 1.1rem;
+      color: var(--text-main);
+    }
+
+    .chapter-body {
+      display: none;
+      padding: 20px;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .chapter-card.expanded .chapter-body {
+      display: flex;
+      animation: slideDown 0.3s ease-out forwards;
+    }
+
+    .chapter-card.expanded .chevron-icon {
+      transform: rotate(180deg);
+    }
+
+    .chevron-icon {
+      transition: transform 0.3s ease;
+      color: var(--text-muted);
+    }
+
+    /* Chapter Core Idea Area */
+    .chapter-core-idea {
+      background: linear-gradient(135deg, rgba(88, 86, 214, 0.1), rgba(0,0,0,0));
+      border: 1px solid rgba(88, 86, 214, 0.2);
+      border-radius: 14px;
+      padding: 16px;
+      position: relative;
+    }
+
+    .chapter-core-idea::before {
+      content: 'Core Idea';
+      position: absolute;
+      top: -8px;
+      left: 14px;
+      background-color: var(--card-bg);
+      padding: 0 8px;
+      font-size: 0.7rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .chapter-core-idea p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Section Cards (Topics & Stories) */
+    .sections-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .section-card {
+      border: 1px solid var(--border-color);
+      background-color: rgba(255, 255, 255, 0.01);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .section-card-header {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .section-card-title-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .checkbox-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .checkbox-icon {
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .checkbox-container.checked .checkbox-icon {
+      color: var(--read-color);
+    }
+
+    .section-card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .badge {
+      font-size: 0.65rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-story {
+      background-color: var(--badge-story-bg);
+      color: var(--badge-story-text);
+    }
+
+    .badge-topic {
+      background-color: var(--badge-topic-bg);
+      color: var(--badge-topic-text);
+    }
+
+    .section-card-body {
+      display: none;
+      padding: 0 16px 16px 16px;
+    }
+
+    .section-card.expanded {
+      border-color: var(--accent-color);
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    .section-card.expanded .section-card-body {
+      display: block;
+      animation: slideDown 0.25s ease-out forwards;
+    }
+
+    .section-card.expanded .section-chevron {
+      transform: rotate(180deg);
+    }
+
+    .section-chevron {
+      transition: transform 0.25s;
+      color: var(--text-muted);
+    }
+
+    .section-summary-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    .btn-read-full {
+      width: 100%;
+      background-color: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--accent-color);
+      padding: 10px;
+      border-radius: 10px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .btn-read-full:active {
+      background-color: rgba(88, 86, 214, 0.05);
+      border-color: var(--accent-color);
+    }
+
+    /* Unabridged Reader Mode View (Immersive Overlay) */
+    .reader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--reader-bg);
+      z-index: 200;
+      display: none;
+      flex-direction: column;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    .reader-overlay.active {
+      display: flex;
+      animation: slideInUp 0.35s cubic-bezier(0.1, 0.76, 0.55, 0.94) forwards;
+    }
+
+    .reader-header {
+      background-color: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    .reader-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .reader-title-area {
+      min-width: 0;
+    }
+
+    .reader-chapter-name {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+
+    .reader-section-title {
+      font-size: 1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text-main);
+    }
+
+    .reader-content-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 24px 20px 100px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .reader-summary-preview {
+      background-color: rgba(255, 255, 255, 0.02);
+      border-left: 3px solid var(--accent-color);
+      padding: 14px 16px;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 28px;
+    }
+
+    .reader-summary-label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-color);
+      margin-bottom: 4px;
+    }
+
+    .reader-summary-preview p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    .reader-body-text {
+      font-family: 'Lora', Georgia, serif;
+      font-size: var(--reading-font-size, 18px);
+      line-height: 1.8;
+      color: var(--text-main);
+      transition: font-size 0.2s;
+    }
+
+    .reader-body-text p {
+      margin-bottom: 24px;
+      text-indent: 1.5em;
+    }
+
+    .reader-body-text p:first-of-type {
+      text-indent: 0;
+    }
+
+    .reader-body-text p:first-of-type::first-letter {
+      font-size: 3.2em;
+      float: left;
+      line-height: 0.8;
+      padding-right: 8px;
+      padding-top: 4px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: var(--accent-color);
+    }
+
+    /* Floating Reader Action Bar (One-handed navigation bottom) */
+    .reader-footer-actions {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 40px);
+      max-width: 450px;
+      height: 56px;
+      background-color: rgba(20, 20, 25, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      z-index: 210;
+    }
+
+    :root[data-theme="sepia"] .reader-footer-actions {
+      background-color: rgba(245, 238, 223, 0.9);
+      border: 1px solid rgba(140, 98, 57, 0.2);
+      box-shadow: 0 10px 30px rgba(140, 98, 57, 0.15);
+    }
+
+    .footer-action-btn {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      cursor: pointer;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+
+    .footer-action-btn:active {
+      opacity: 1;
+    }
+
+    .footer-action-btn span {
+      font-size: 0.65rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 500;
+    }
+
+    /* Settings Side Drawer */
+    .settings-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 85%;
+      max-width: 380px;
+      height: 100vh;
+      background-color: var(--surface-color);
+      border-left: 1px solid var(--border-color);
+      z-index: 300;
+      box-shadow: var(--shadow-md);
+      transition: right 0.3s cubic-bezier(0.1, 0.76, 0.55, 0.94);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .settings-drawer.active {
+      right: 0;
+    }
+
+    .settings-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .settings-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      flex: 1;
+    }
+
+    .settings-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.6);
+      z-index: 290;
+      display: none;
+    }
+
+    .settings-overlay.active {
+      display: block;
+    }
+
+    .settings-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .settings-group-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    /* Theme Option buttons */
+    .theme-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .theme-opt {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 12px 6px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .theme-opt.active {
+      border-color: var(--accent-color);
+      background-color: rgba(88, 86, 214, 0.08);
+    }
+
+    /* Font controls */
+    .font-size-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 8px 12px;
+    }
+
+    .font-size-display {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    /* Floating Resume Action Button (FAB) */
+    .resume-fab {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 30px;
+      box-shadow: 0 6px 20px rgba(88, 86, 214, 0.4);
+      display: none;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      z-index: 90;
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .resume-fab:active {
+      transform: scale(0.95);
+      background-color: var(--accent-hover);
+    }
+
+    /* Reset button */
+    .reset-btn {
+      width: 100%;
+      background-color: transparent;
+      border: 1px solid rgba(255, 69, 58, 0.3);
+      color: #ff453a;
+      padding: 12px;
+      border-radius: 10px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: auto;
+      transition: background-color 0.2s;
+    }
+
+    .reset-btn:active {
+      background-color: rgba(255, 69, 58, 0.1);
+    }
+
+    /* Custom Scrollbar for AMOLED/Dark settings */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-color);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 3px;
+    }
+
+    /* Animations */
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInUp {
+      from {
+        transform: translateY(100vh);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    /* Desktop fallback warning banner */
+    .desktop-tip {
+      background-color: rgba(88, 86, 214, 0.1);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Header -->
+    <header>
+      <div class="header-info">
+        <h1 class="book-title" id="app-title">Loading Book...</h1>
+        <p class="book-author" id="app-author">Please upload a book structure</p>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" id="open-settings" aria-label="Settings">
+          <i data-lucide="settings" style="width: 20px; height: 20px;"></i>
+        </button>
+      </div>
+      <div class="progress-track">
+        <div class="progress-bar" id="progress-bar-indicator"></div>
+      </div>
+    </header>
+
+    <!-- Main View Dashboard -->
+    <main class="main-content" id="main-content-area">
+      
+      <!-- Desktop & Layout Notification -->
+      <div class="desktop-tip" id="desktop-tip">
+        <i data-lucide="smartphone" style="width: 16px; height: 16px; flex-shrink: 0; color: var(--accent-color);"></i>
+        <span>Optimized for OnePlus 8T layout. Use Chrome DevTools Device view for best experience.</span>
+      </div>
+
+      <!-- File Drop & Load Dashboard -->
+      <div class="uploader-container" id="uploader-view">
+        <i data-lucide="file-json" class="uploader-icon" style="width: 48px; height: 48px;"></i>
+        <h2 class="uploader-title">Load Book JSON Data</h2>
+        <p class="uploader-desc">Drag and drop your book's generated data file here, or browse files on your device.</p>
+        <button class="upload-btn" id="browse-btn">Browse File</button>
+        <input type="file" id="file-input" accept=".json">
+        
+        <div style="margin-top: 24px; font-size: 0.8rem; color: var(--text-muted);">
+          <span>Or try loading the:</span>
+          <button id="load-sample-btn" style="background: none; border: none; color: var(--accent-color); font-weight: 600; text-decoration: underline; cursor: pointer; margin-left: 4px;">Sample book data</button>
+        </div>
+      </div>
+
+      <!-- Book Overview / Dashboard Panel -->
+      <div class="dashboard-card hidden" id="book-dashboard">
+        <h2 class="section-title">
+          <i data-lucide="sparkles" style="width: 18px; height: 18px; color: var(--accent-color);"></i>
+          Book Core Thesis
+        </h2>
+        <p class="thesis-text" id="book-thesis"></p>
+        <h3 class="section-title" style="font-size: 1.05rem; margin-top: 16px;">Key Takeaways</h3>
+        <ul class="takeaways-list" id="book-takeaways"></ul>
+      </div>
+
+      <!-- Chapter Accoridon Listing -->
+      <div id="chapters-list-container" class="hidden" style="display: flex; flex-direction: column; gap: 16px;">
+        <!-- Dynamically Rendered Chapters Go Here -->
+      </div>
+
+    </main>
+
+    <!-- Settings Side Drawer -->
+    <div class="settings-overlay" id="settings-overlay"></div>
+    <div class="settings-drawer" id="settings-drawer">
+      <div class="settings-header">
+        <h2 style="font-size: 1.2rem;">Reading Options</h2>
+        <button class="icon-btn" id="close-settings">
+          <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+        </button>
+      </div>
+      <div class="settings-body">
+        
+        <!-- Theme Setting -->
+        <div class="settings-group">
+          <span class="settings-group-title">Display Theme</span>
+          <div class="theme-selector">
+            <button class="theme-opt" data-val="amoled">
+              <span style="width: 20px; height: 20px; border-radius: 50%; background-color: #000; border: 1px solid #444;"></span>
+              AMOLED
+            </button>
+            <button class="theme-opt" data-val="dim">
+              <span style="width: 20px; height: 20px; border-radius: 50%; background-color: #121824; border: 1px solid #444;"></span>
+              Dim
+            </button>
+            <button class="theme-opt" data-val="sepia">
+              <span style="width: 20px; height: 20px; border-radius: 50%; background-color: #fcf8f2; border: 1px solid #ccc;"></span>
+              Sepia
+            </button>
+          </div>
+        </div>
+
+        <!-- Font Size Setting -->
+        <div class="settings-group">
+          <span class="settings-group-title">Reader Text Size</span>
+          <div class="font-size-controls">
+            <button class="icon-btn" id="font-dec">
+              <i data-lucide="minus" style="width: 18px; height: 18px;"></i>
+            </button>
+            <span class="font-size-display" id="font-size-lbl">18px</span>
+            <button class="icon-btn" id="font-inc">
+              <i data-lucide="plus" style="width: 18px; height: 18px;"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Reset Button -->
+        <button class="reset-btn" id="btn-reset-data">
+          <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+          Clear Progress & Cache
+        </button>
+      </div>
+    </div>
+
+    <!-- Floating FAB to resume reading -->
+    <button class="resume-fab" id="resume-fab">
+      <i data-lucide="play" style="width: 18px; height: 18px; fill: white;"></i>
+      <span>Resume Reading</span>
+    </button>
+
+  </div>
+
+  <!-- Fullscreen Immersive Reader Mode -->
+  <div class="reader-overlay" id="reader-overlay">
+    <div class="reader-header">
+      <div class="reader-header-left">
+        <button class="icon-btn" id="reader-back" aria-label="Back to dashboard">
+          <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
+        </button>
+        <div class="reader-title-area">
+          <span class="reader-chapter-name" id="reader-chapter-title">Chapter 1</span>
+          <h2 class="reader-section-title" id="reader-sec-title">The Legend of the Watchmaker</h2>
+        </div>
+      </div>
+      <div>
+        <button class="icon-btn" id="reader-mark-read" aria-label="Mark completed">
+          <i data-lucide="check-circle" id="reader-check-icon" style="width: 20px; height: 20px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="reader-content-container">
+      <!-- Short summary at top to refresh mind before diving deep -->
+      <div class="reader-summary-preview">
+        <div class="reader-summary-label">Summary Summary</div>
+        <p id="reader-summary-txt"></p>
+      </div>
+
+      <!-- Unabridged Full Text -->
+      <div class="reader-body-text" id="reader-body-content">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- Floating navigation action controls for easy one-hand usage -->
+    <div class="reader-footer-actions">
+      <button class="footer-action-btn" id="reader-prev-sec">
+        <i data-lucide="skip-back" style="width: 20px; height: 20px;"></i>
+        <span>Prev</span>
+      </button>
+      <button class="footer-action-btn" id="reader-toggle-theme">
+        <i data-lucide="palette" style="width: 20px; height: 20px;"></i>
+        <span>Theme</span>
+      </button>
+      <button class="footer-action-btn" id="reader-adjust-font">
+        <i data-lucide="type" style="width: 20px; height: 20px;"></i>
+        <span>Font</span>
+      </button>
+      <button class="footer-action-btn" id="reader-next-sec">
+        <i data-lucide="skip-forward" style="width: 20px; height: 20px;"></i>
+        <span>Next</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // App State Management
+    let bookData = null;
+    let readingProgress = {
+      completedSections: {}, // sectionId -> boolean
+      lastReadSectionId: null,
+      lastReadChapterId: null,
+      scrollPositions: {} // sectionId -> percentage
+    };
+    let userPreferences = {
+      theme: 'amoled',
+      fontSize: 18
+    };
+
+    // DOM Elements
+    const elements = {
+      title: document.getElementById('app-title'),
+      author: document.getElementById('app-author'),
+      uploader: document.getElementById('uploader-view'),
+      dashboard: document.getElementById('book-dashboard'),
+      thesis: document.getElementById('book-thesis'),
+      takeaways: document.getElementById('book-takeaways'),
+      chaptersList: document.getElementById('chapters-list-container'),
+      fileInput: document.getElementById('file-input'),
+      browseBtn: document.getElementById('browse-btn'),
+      loadSampleBtn: document.getElementById('load-sample-btn'),
+      openSettings: document.getElementById('open-settings'),
+      closeSettings: document.getElementById('close-settings'),
+      settingsDrawer: document.getElementById('settings-drawer'),
+      settingsOverlay: document.getElementById('settings-overlay'),
+      themeOpts: document.querySelectorAll('.theme-opt'),
+      fontDec: document.getElementById('font-dec'),
+      fontInc: document.getElementById('font-inc'),
+      fontSizeLbl: document.getElementById('font-size-lbl'),
+      resetProgressBtn: document.getElementById('btn-reset-data'),
+      resumeFab: document.getElementById('resume-fab'),
+      progressBar: document.getElementById('progress-bar-indicator'),
+
+      // Reader UI Elements
+      readerOverlay: document.getElementById('reader-overlay'),
+      readerBack: document.getElementById('reader-back'),
+      readerMarkRead: document.getElementById('reader-mark-read'),
+      readerCheckIcon: document.getElementById('reader-check-icon'),
+      readerChapterTitle: document.getElementById('reader-chapter-title'),
+      readerSecTitle: document.getElementById('reader-sec-title'),
+      readerSummaryTxt: document.getElementById('reader-summary-txt'),
+      readerBodyContent: document.getElementById('reader-body-content'),
+      readerPrevSec: document.getElementById('reader-prev-sec'),
+      readerNextSec: document.getElementById('reader-next-sec'),
+      readerToggleTheme: document.getElementById('reader-toggle-theme'),
+      readerAdjustFont: document.getElementById('reader-adjust-font')
+    };
+
+    // Initialize application settings
+    function init() {
+      // 1. Load preferences from LocalStorage
+      const savedPrefs = localStorage.getItem('reader_prefs');
+      if (savedPrefs) {
+        userPreferences = JSON.parse(savedPrefs);
+      }
+      applyTheme(userPreferences.theme);
+      applyFontSize(userPreferences.fontSize);
+
+      // 2. Setup Events
+      setupEventListeners();
+
+      // 3. Try to auto-fetch default JSON file (in case user hosts it)
+      fetch('sample_book.json')
+        .then(res => {
+          if (!res.ok) throw new Error('Data file not pre-loaded');
+          return res.json();
+        })
+        .then(data => {
+          loadBookData(data);
+        })
+        .catch(err => {
+          console.log('No preloaded JSON found. Ready for file upload.');
+        });
+    }
+
+    function setupEventListeners() {
+      // Browse button & File input selection
+      elements.browseBtn.addEventListener('click', () => elements.fileInput.click());
+      elements.fileInput.addEventListener('change', handleFileSelect);
+
+      // Loading sample button
+      elements.loadSampleBtn.addEventListener('click', loadSampleData);
+
+      // Drag and drop events
+      elements.uploader.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        elements.uploader.classList.add('dragover');
+      });
+
+      elements.uploader.addEventListener('dragleave', () => {
+        elements.uploader.classList.remove('dragover');
+      });
+
+      elements.uploader.addEventListener('drop', (e) => {
+        e.preventDefault();
+        elements.uploader.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          processJsonFile(files[0]);
+        }
+      });
+
+      // Settings Drawer toggling
+      elements.openSettings.addEventListener('click', toggleSettingsDrawer);
+      elements.closeSettings.addEventListener('click', toggleSettingsDrawer);
+      elements.settingsOverlay.addEventListener('click', toggleSettingsDrawer);
+
+      // Themes changes
+      elements.themeOpts.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const t = btn.getAttribute('data-val');
+          applyTheme(t);
+          savePreferences();
+        });
+      });
+
+      // Font size changes
+      elements.fontInc.addEventListener('click', () => {
+        if (userPreferences.fontSize < 30) {
+          userPreferences.fontSize += 2;
+          applyFontSize(userPreferences.fontSize);
+          savePreferences();
+        }
+      });
+      elements.fontDec.addEventListener('click', () => {
+        if (userPreferences.fontSize > 12) {
+          userPreferences.fontSize -= 2;
+          applyFontSize(userPreferences.fontSize);
+          savePreferences();
+        }
+      });
+
+      // Reset application cache/progress
+      elements.resetProgressBtn.addEventListener('click', () => {
+        if (confirm("Are you sure you want to clear all reading progress and preferences?")) {
+          localStorage.removeItem('reader_prefs');
+          localStorage.removeItem(`book_progress_${bookData?.bookId || 'generic'}`);
+          location.reload();
+        }
+      });
+
+      // Floating Action Button
+      elements.resumeFab.addEventListener('click', () => {
+        if (readingProgress.lastReadSectionId) {
+          openReaderMode(readingProgress.lastReadSectionId);
+        }
+      });
+
+      // Reader Mode Specific Controls
+      elements.readerBack.addEventListener('click', closeReaderMode);
+      
+      elements.readerMarkRead.addEventListener('click', () => {
+        const activeSectionId = elements.readerMarkRead.getAttribute('data-active-sec');
+        toggleSectionRead(activeSectionId);
+      });
+
+      // Next / Prev Sections
+      elements.readerPrevSec.addEventListener('click', navigatePrevious);
+      elements.readerNextSec.addEventListener('click', navigateNext);
+      elements.readerToggleTheme.addEventListener('click', cycleThemes);
+      elements.readerAdjustFont.addEventListener('click', () => {
+        let size = userPreferences.fontSize + 2;
+        if (size > 26) size = 14;
+        applyFontSize(size);
+        savePreferences();
+      });
+
+      // Track reader scroll progress for progress saving
+      elements.readerOverlay.addEventListener('scroll', throttle(saveScrollPosition, 500));
+    }
+
+    // Load Local Book JSON Data
+    function handleFileSelect(e) {
+      if (e.target.files.length > 0) {
+        processJsonFile(e.target.files[0]);
+      }
+    }
+
+    function processJsonFile(file) {
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const parsed = JSON.parse(evt.target.result);
+          loadBookData(parsed);
+        } catch (error) {
+          alert("Error parsing JSON file. Please ensure it adheres to the book reader schema.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function loadSampleData() {
+      fetch('sample_book.json')
+        .then(res => res.json())
+        .then(data => loadBookData(data))
+        .catch(err => alert("Could not fetch sample data locally. Run a local server or select a JSON file."));
+    }
+
+    // Load Book Data into Layout
+    function loadBookData(data) {
+      bookData = data;
+      
+      // Update UI title/authors
+      elements.title.textContent = data.title;
+      elements.author.textContent = `by ${data.author}`;
+      document.title = `${data.title} - Unabridged Reader`;
+
+      // Render book summaries
+      elements.thesis.textContent = data.summary.coreThesis;
+      elements.takeaways.innerHTML = '';
+      data.summary.keyTakeaways.forEach(takeaway => {
+        const li = document.createElement('li');
+        li.textContent = takeaway;
+        elements.takeaways.appendChild(li);
+      });
+
+      // Hide uploader, show workspace
+      elements.uploader.classList.add('hidden');
+      elements.dashboard.classList.remove('hidden');
+      elements.chaptersList.classList.remove('hidden');
+
+      // Load specific reading progress
+      loadReadingProgress();
+
+      // Render chapters and sections
+      renderChaptersList();
+
+      // Check if we should display Resume FAB
+      updateResumeFab();
+      
+      // Update total reading progress bar
+      updateGlobalProgressBar();
+
+      lucide.createIcons();
+    }
+
+    // Render Chapters & Collapsible Sections
+    function renderChaptersList() {
+      elements.chaptersList.innerHTML = '';
+      
+      bookData.chapters.forEach((chapter, chIdx) => {
+        const card = document.createElement('div');
+        card.className = 'chapter-card';
+        card.id = `chapter-card-${chapter.chapterId}`;
+        
+        // Auto-expand first chapter if no progress is saved
+        if (chIdx === 0 && !readingProgress.lastReadChapterId) {
+          card.classList.add('expanded');
+        } else if (readingProgress.lastReadChapterId === chapter.chapterId) {
+          card.classList.add('expanded');
+        }
+
+        const isLastReadCh = readingProgress.lastReadChapterId === chapter.chapterId;
+
+        // Render header
+        card.innerHTML = `
+          <div class="chapter-header" onclick="toggleChapter('${chapter.chapterId}')">
+            <div class="chapter-header-left">
+              <span class="chapter-number">Chapter ${chapter.chapterNumber}</span>
+              <h3 class="chapter-title">${chapter.title}</h3>
+            </div>
+            <i data-lucide="chevron-down" class="chevron-icon"></i>
+          </div>
+          <div class="chapter-body">
+            <div class="chapter-core-idea">
+              <p>${chapter.summary.coreIdea}</p>
+            </div>
+            <div class="sections-container" id="sections-for-${chapter.chapterId}">
+              <!-- Sections populated dynamically -->
+            </div>
+          </div>
+        `;
+
+        elements.chaptersList.appendChild(card);
+
+        // Populate sections
+        const sectionsBox = document.getElementById(`sections-for-${chapter.chapterId}`);
+        chapter.sections.forEach(section => {
+          const secCard = document.createElement('div');
+          secCard.className = 'section-card';
+          secCard.id = `sec-card-${section.sectionId}`;
+
+          const isCompleted = !!readingProgress.completedSections[section.sectionId];
+
+          secCard.innerHTML = `
+            <div class="section-card-header">
+              <div class="section-card-title-area" onclick="toggleSectionCollapse('${section.sectionId}')">
+                <div class="checkbox-container ${isCompleted ? 'checked' : ''}" id="check-box-${section.sectionId}" onclick="event.stopPropagation(); toggleSectionRead('${section.sectionId}')">
+                  <i data-lucide="${isCompleted ? 'check-circle' : 'circle'}" class="checkbox-icon" style="width: 18px; height: 18px;"></i>
+                </div>
+                <span class="section-card-title">${section.title}</span>
+                <span class="badge badge-${section.type}">${section.type}</span>
+              </div>
+              <div onclick="toggleSectionCollapse('${section.sectionId}')" style="padding: 4px; display: flex; align-items: center;">
+                <i data-lucide="chevron-down" class="section-chevron" style="width: 16px; height: 16px;"></i>
+              </div>
+            </div>
+            <div class="section-card-body">
+              <p class="section-summary-text">${section.summary}</p>
+              <button class="btn-read-full" onclick="openReaderMode('${section.sectionId}')">
+                <i data-lucide="book-open" style="width: 14px; height: 14px;"></i>
+                Read Full Unabridged Text
+              </button>
+            </div>
+          `;
+          sectionsBox.appendChild(secCard);
+        });
+      });
+    }
+
+    // Toggle Collapsibles
+    window.toggleChapter = function(chapterId) {
+      const card = document.getElementById(`chapter-card-${chapterId}`);
+      if (card) {
+        const wasExpanded = card.classList.contains('expanded');
+        
+        // Collapse all others
+        document.querySelectorAll('.chapter-card').forEach(c => c.classList.remove('expanded'));
+        
+        if (!wasExpanded) {
+          card.classList.add('expanded');
+          readingProgress.lastReadChapterId = chapterId;
+          saveReadingProgress();
+        }
+      }
+    };
+
+    window.toggleSectionCollapse = function(sectionId) {
+      const card = document.getElementById(`sec-card-${sectionId}`);
+      if (card) {
+        const wasExpanded = card.classList.contains('expanded');
+        // Close other sections in this chapter
+        card.parentElement.querySelectorAll('.section-card').forEach(s => s.classList.remove('expanded'));
+        
+        if (!wasExpanded) {
+          card.classList.add('expanded');
+        }
+      }
+    };
+
+    // Checkbox reading toggle
+    window.toggleSectionRead = function(sectionId) {
+      const isCompleted = !readingProgress.completedSections[sectionId];
+      readingProgress.completedSections[sectionId] = isCompleted;
+
+      // Update Dashboard checklist status
+      const box = document.getElementById(`check-box-${sectionId}`);
+      if (box) {
+        if (isCompleted) {
+          box.classList.add('checked');
+          box.innerHTML = `<i data-lucide="check-circle" class="checkbox-icon" style="width: 18px; height: 18px; color: var(--read-color);"></i>`;
+        } else {
+          box.classList.remove('checked');
+          box.innerHTML = `<i data-lucide="circle" class="checkbox-icon" style="width: 18px; height: 18px;"></i>`;
+        }
+        lucide.createIcons();
+      }
+
+      // Update Reader Overlay checklist status if currently open
+      const overlayActiveSec = elements.readerMarkRead.getAttribute('data-active-sec');
+      if (overlayActiveSec === sectionId) {
+        updateReaderCheckIcon(isCompleted);
+      }
+
+      saveReadingProgress();
+      updateGlobalProgressBar();
+    }
+
+    function updateReaderCheckIcon(isCompleted) {
+      if (isCompleted) {
+        elements.readerCheckIcon.setAttribute('data-lucide', 'check-circle');
+        elements.readerMarkRead.style.color = 'var(--read-color)';
+      } else {
+        elements.readerCheckIcon.setAttribute('data-lucide', 'circle');
+        elements.readerMarkRead.style.color = 'var(--text-main)';
+      }
+      lucide.createIcons();
+    }
+
+    // Reader Mode Implementation
+    window.openReaderMode = function(sectionId) {
+      // Find section info
+      let section = null;
+      let chapter = null;
+      
+      for (const ch of bookData.chapters) {
+        section = ch.sections.find(s => s.sectionId === sectionId);
+        if (section) {
+          chapter = ch;
+          break;
+        }
+      }
+
+      if (!section || !chapter) return;
+
+      // Populate reader content
+      elements.readerChapterTitle.textContent = `Chapter ${chapter.chapterNumber}: ${chapter.title}`;
+      elements.readerSecTitle.textContent = section.title;
+      elements.readerSummaryTxt.textContent = section.summary;
+      
+      // Convert raw text into paragraphs
+      const bodyHtml = section.unabridgedText.split('\n\n')
+        .map(para => `<p>${para.replace(/\n/g, ' ')}</p>`)
+        .join('');
+      elements.readerBodyContent.innerHTML = bodyHtml;
+
+      // Mark check status
+      elements.readerMarkRead.setAttribute('data-active-sec', sectionId);
+      updateReaderCheckIcon(!!readingProgress.completedSections[sectionId]);
+
+      // Handle next/prev controls status
+      const flatSections = getFlatSectionsList();
+      const idx = flatSections.findIndex(s => s.sectionId === sectionId);
+      elements.readerPrevSec.disabled = (idx === 0);
+      elements.readerNextSec.disabled = (idx === flatSections.length - 1);
+      elements.readerPrevSec.style.opacity = (idx === 0) ? '0.3' : '1';
+      elements.readerNextSec.style.opacity = (idx === flatSections.length - 1) ? '0.3' : '1';
+
+      // Open Reader Screen
+      elements.readerOverlay.style.display = 'flex';
+      setTimeout(() => {
+        elements.readerOverlay.classList.add('active');
+        // Restore scroll position
+        const savedScroll = readingProgress.scrollPositions[sectionId] || 0;
+        const scrollHeight = elements.readerOverlay.scrollHeight - elements.readerOverlay.clientHeight;
+        elements.readerOverlay.scrollTop = savedScroll * scrollHeight;
+      }, 50);
+
+      // Record reading history state
+      readingProgress.lastReadSectionId = sectionId;
+      readingProgress.lastReadChapterId = chapter.chapterId;
+      saveReadingProgress();
+      updateResumeFab();
+    }
+
+    function closeReaderMode() {
+      elements.readerOverlay.classList.remove('active');
+      setTimeout(() => {
+        elements.readerOverlay.style.display = 'none';
+        // Scroll to the active section card on back
+        const card = document.getElementById(`sec-card-${readingProgress.lastReadSectionId}`);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 350);
+    }
+
+    // Navigation inside reader
+    function navigatePrevious() {
+      const flat = getFlatSectionsList();
+      const currentId = elements.readerMarkRead.getAttribute('data-active-sec');
+      const idx = flat.findIndex(s => s.sectionId === currentId);
+      if (idx > 0) {
+        elements.readerOverlay.scrollTop = 0;
+        openReaderMode(flat[idx - 1].sectionId);
+      }
+    }
+
+    function navigateNext() {
+      const flat = getFlatSectionsList();
+      const currentId = elements.readerMarkRead.getAttribute('data-active-sec');
+      const idx = flat.findIndex(s => s.sectionId === currentId);
+      if (idx < flat.length - 1) {
+        elements.readerOverlay.scrollTop = 0;
+        openReaderMode(flat[idx + 1].sectionId);
+      }
+    }
+
+    function cycleThemes() {
+      const themes = ['amoled', 'dim', 'sepia'];
+      let idx = themes.indexOf(userPreferences.theme);
+      idx = (idx + 1) % themes.length;
+      applyTheme(themes[idx]);
+      savePreferences();
+    }
+
+    function getFlatSectionsList() {
+      const list = [];
+      bookData.chapters.forEach(ch => {
+        ch.sections.forEach(sec => {
+          list.push(sec);
+        });
+      });
+      return list;
+    }
+
+    // Theme & Preferences Adjusters
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      userPreferences.theme = theme;
+      
+      // Update UI active buttons
+      elements.themeOpts.forEach(btn => {
+        if (btn.getAttribute('data-val') === theme) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    function applyFontSize(size) {
+      userPreferences.fontSize = size;
+      document.documentElement.style.setProperty('--reading-font-size', `${size}px`);
+      elements.fontSizeLbl.textContent = `${size}px`;
+    }
+
+    function toggleSettingsDrawer() {
+      elements.settingsDrawer.classList.toggle('active');
+      elements.settingsOverlay.classList.toggle('active');
+    }
+
+    // Data persistence LocalStorage
+    function savePreferences() {
+      localStorage.setItem('reader_prefs', JSON.stringify(userPreferences));
+    }
+
+    function loadReadingProgress() {
+      if (!bookData) return;
+      const progressKey = `book_progress_${bookData.bookId}`;
+      const saved = localStorage.getItem(progressKey);
+      if (saved) {
+        readingProgress = JSON.parse(saved);
+        if (!readingProgress.completedSections) readingProgress.completedSections = {};
+        if (!readingProgress.scrollPositions) readingProgress.scrollPositions = {};
+      } else {
+        readingProgress = {
+          completedSections: {},
+          lastReadSectionId: null,
+          lastReadChapterId: null,
+          scrollPositions: {}
+        };
+      }
+    }
+
+    function saveReadingProgress() {
+      if (!bookData) return;
+      const progressKey = `book_progress_${bookData.bookId}`;
+      localStorage.setItem(progressKey, JSON.stringify(readingProgress));
+    }
+
+    function saveScrollPosition() {
+      const activeSectionId = elements.readerMarkRead.getAttribute('data-active-sec');
+      if (!activeSectionId) return;
+
+      const scrollTop = elements.readerOverlay.scrollTop;
+      const scrollHeight = elements.readerOverlay.scrollHeight - elements.readerOverlay.clientHeight;
+      if (scrollHeight > 0) {
+        const percent = scrollTop / scrollHeight;
+        readingProgress.scrollPositions[activeSectionId] = percent;
+        saveReadingProgress();
+      }
+    }
+
+    function updateResumeFab() {
+      if (readingProgress.lastReadSectionId) {
+        elements.resumeFab.style.display = 'flex';
+      } else {
+        elements.resumeFab.style.display = 'none';
+      }
+    }
+
+    function updateGlobalProgressBar() {
+      if (!bookData) return;
+      const flat = getFlatSectionsList();
+      if (flat.length === 0) return;
+
+      let completedCount = 0;
+      flat.forEach(sec => {
+        if (readingProgress.completedSections[sec.sectionId]) {
+          completedCount++;
+        }
+      });
+
+      const percent = (completedCount / flat.length) * 100;
+      elements.progressBar.style.width = `${percent}%`;
+    }
+
+    // Utility functions
+    function throttle(func, limit) {
+      let inThrottle;
+      return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+          func.apply(context, args);
+          inThrottle = true;
+          setTimeout(() => inThrottle = false, limit);
+        }
+      }
+    }
+
+    // Fire Init
+    init();
+  </script>
+</body>
+</html>
