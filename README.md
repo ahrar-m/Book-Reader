@@ -1,3 +1,7 @@
+## ⚠️ Project No Longer Maintained
+
+This project is an activity of the past and is no longer being actively developed or maintained. 
+
 # Mobile-Optimized Unabridged Book Reader
 
 A premium, lightweight, standalone web application designed specifically for reading books in a structured, mobile-optimized format. Designed with high-fidelity aesthetics and layout constraints optimized for modern displays like the **OnePlus 8T** (20:9 ratio, high-refresh rates, AMOLED display).
